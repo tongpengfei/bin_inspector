@@ -1,5 +1,8 @@
 # BinInspector 文件格式查看器
-
+# 最新下载地址:
+  [BinInspector_v0.0.1.dmg](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.1/BinInspector_v0.0.1.dmg)
+  
+  
 ### 主要功能
   * 以列表，树的形式，二进制数据的形式，查看文件格式
   * 把一个大的pcap文件按链接切隔为各个小的pcap文件
