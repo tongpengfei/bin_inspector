@@ -79,3 +79,8 @@
     * 支持以链接为单位提取payload，也就是从 tcp|udp的后面开始提取数据
     * 支持从rtp里提取h264，并保存至/tmp文件
     * 支持端口解析配置，不同的端口解析为不同的格式
+
+### 截图
+![mac h264](doc/screenshots/mac_h264.png)
+![mac mp4](doc/screenshots/mac_mp4.png)
+![win h264](doc/screenshots/win_h264.png)
