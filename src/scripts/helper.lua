@@ -250,6 +250,7 @@ local function do_decode_file(file)
 	end
 
     bi.clear()
+	bi.clear_bmp()
 
     for k, codec in pairs(dict_codec) do
         if codec.clear then
