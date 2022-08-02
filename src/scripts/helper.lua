@@ -100,6 +100,13 @@ local function ask_save(name)
     return fp
 end
 
+local function save_data(fname, data)
+	local fp = ask_save(string.format("%s/%s", bi.get_tmp_dir(), fname))
+	if nil == fp then return end
+	fp:write( data )
+	fp:close()
+end
+
 local dict_codec = {}
 
 local function register_codec(script, codec)
@@ -438,6 +445,7 @@ local t = {
 
     read_file = read_file,
     ask_save = ask_save,
+	save_data = save_data,
 
     get_codec = get_codec,
 

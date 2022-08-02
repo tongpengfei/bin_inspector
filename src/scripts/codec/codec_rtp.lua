@@ -414,6 +414,8 @@ local function field_nalu_stap(rtp_hdr, key, len, is_stap_b)
                 --local f_ebsp = self:append( field.string( "ebsp", f_size.value-1) )
                 local f_ebsp = self:append( field.string( "ebsp", nalu_len-1) )
 
+				--TODO BUG: STAP-A共用了一个seq,造成多从此nalu只能有第一个seq起作用,所以STAP-A时候，SPS,PPS提取不到PPS
+
                 local nalu_buf = dict_stream_nalus:get(key)
                 nalu_buf:append( rtp_hdr.seq, f_ebsp, i_nalu_hdr, true)
             end, nil, fh.child_brief))
