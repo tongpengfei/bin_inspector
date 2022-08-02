@@ -22,8 +22,8 @@
 
 ### 目前支持的文件格式
 
-| file format | supported | has picture | comment |
-| :-----| ----: | :----: | :----: |
+| file format | supported | draw picture | comment |
+| :-----: | :----: | :----: | :---- |
 | aac | <font color='#33FF33'>✓</font> |   |   |
 | wav | <font color='#33FF33'>✓</font> |   | extract pcm; seperate L/R pcm  |
 | mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   |
