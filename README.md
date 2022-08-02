@@ -21,8 +21,22 @@
   * Mac下的私有解析器可以放在~/.bin_inspector/scripts/codec下面，比如仅自己使用的解析器可以放在这里
 
 ### 目前支持的文件格式
+
+| file format | supported | has picture | comment |
+| :-----| ----: | :----: | :----: |
+| aac | <font color='#33FF33'>✓</font> |   |   |
+| wav | <font color='#33FF33'>✓</font> |   | extract pcm; seperate L/R pcm  |
+| mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   |
+| flv | <font color='#33FF33'>✓</font> |   |   |
+| mp4 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | show timeline; show audio/video frames  |
+| yuv | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | draw y/u/v/yuv picture  |
+| h264 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   |
+| h265 | <font color='#33FF33'>✓</font> |   |   |
+| rtp | <font color='#33FF33'>✓</font> |   |   |
+| rtcp | <font color='#33FF33'>✓</font> |   |   |
+| pcap,pcapng | <font color='#33FF33'>✓</font> |  | split pcap by stream, extract h264/payload by stream |
+
   * bin: 默认格式，未识别的文件名后缀，会以默认格式解析数据
-  
   * aac: 音频文件，解析每帧的数据及格式
     * 文件大小
     * 通道数
