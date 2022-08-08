@@ -22,19 +22,19 @@
 
 ### 目前支持的文件格式
 
-| file format | supported | draw picture | comment |
-| :-----: | :----: | :----: | :---- |
-| aac | <font color='#33FF33'>✓</font> |   |   |
-| wav | <font color='#33FF33'>✓</font> |   | extract pcm; seperate L/R pcm  |
-| mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   |
-| flv | <font color='#33FF33'>✓</font> |   |   |
-| mp4 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | show timeline; show audio/video frames  |
-| yuv | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | draw y/u/v/yuv picture  |
-| h264 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   |
-| h265 | <font color='#33FF33'>✓</font> |   |   |
-| rtp | <font color='#33FF33'>✓</font> |   |   |
-| rtcp | <font color='#33FF33'>✓</font> |   |   |
-| pcap,pcapng | <font color='#33FF33'>✓</font> |  | split pcap by stream, extract h264/payload by stream |
+| file format | supported | draw picture | comment | screenshot |
+| :-----: | :----: | :----: | :---- | :---- |
+| aac | <font color='#33FF33'>✓</font> |   |   | ![mac_aac](doc/screenshots/mac_aac.png)  |
+| wav | <font color='#33FF33'>✓</font> |   | extract pcm; seperate L/R pcm  | ![mac_wav](doc/screenshots/mac_wav.png) |
+| mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   | ![mac_mp4](doc/screenshots/mac_mp3.png) |
+| flv | <font color='#33FF33'>✓</font> |   |   | ![mac_flv](doc/screenshots/mac_flv.png) |
+| mp4 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | show timeline; show audio/video frames  | ![mac_mp4](doc/screenshots/mac_mp4.png) |
+| yuv | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | draw y/u/v/yuv picture  | ![win_yuv](doc/screenshots/win_yuv.png) |
+| h264 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   | ![mac_h264](doc/screenshots/mac_h264.png) |
+| h265 | <font color='#33FF33'>✓</font> |   |   | ![mac_h265](doc/screenshots/mac_h265.png) |
+| rtp | <font color='#33FF33'>✓</font> |   |   | ![mac_rtp](doc/screenshots/mac_pcap_rtp.png)|
+| rtcp | <font color='#33FF33'>✓</font> |   |   | ![mac_rtcp](doc/screenshots/mac_rtcp.png) |
+| pcap,pcapng | <font color='#33FF33'>✓</font> |  | split pcap by stream, extract h264/payload by stream | ![mac_rtcp](doc/screenshots/mac_pcap.png)  ![mac_rtp](doc/screenshots/mac_pcap_rtp_extract_h264.png) |
 
   * bin: 默认格式，未识别的文件名后缀，会以默认格式解析数据
   * aac: 音频文件，解析每帧的数据及格式
@@ -99,4 +99,4 @@
 ### 截图
 ![mac h264](doc/screenshots/mac_h264.png)
 ![mac mp4](doc/screenshots/mac_mp4.png)
-![win h264](doc/screenshots/win_h264.png)
+![win yuv](doc/screenshots/win_yuv.png)
