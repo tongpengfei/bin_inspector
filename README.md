@@ -5,7 +5,7 @@
   
   
 ### 主要功能
-  * 以列表，树的形式，二进制数据的形式，查看文件格式
+  * 查看文件格式
   * 把一个大的pcap文件按链接切隔为各个小的pcap文件
   * 查找二进制，字符串，数字
   * 时间戳转为日期，日期转为时间戳 ms2date date2ms
@@ -39,57 +39,6 @@
 | pcap,pcapng | <font color='#33FF33'>✓</font> |  | split pcap by stream, extract h264/payload by stream | [mac_rtcp.png](doc/screenshots/mac_pcap.png)  [mac_rtp_extract_h264.png](doc/screenshots/mac_pcap_rtp_extract_h264.png) |
 
   * bin: 默认格式，未识别的文件名后缀，会以默认格式解析数据
-  * aac: 音频文件，解析每帧的数据及格式
-    * 文件大小
-    * 通道数
-    * 采样率
-    * 帧数
-    * 码率
-    * 时长
-  * mp3: 基础信息，支持显示mp3封面图片
-    * 文件大小
-    * 通道数
-    * 采样率
-    * 码率
-    * 帧数
-    * 时长
-    
-  * mp4: 显示以下基础信息
-    * 支持显示每帧视频图片
-    * 文件大小
-    * 总时长
-    * 视频track
-      * 视频格式
-      * 分辨率
-      * 视频时长
-      * 帧数
-      * fps
-      * 码率
-    * 音频track
-     * 采样率
-     * 采样大小
-     * 音频时长
-     * 通道数
-     * 帧数
-     
-  * flv: 基础信息，音视频tag
-  
-  * h264: SPS,PPS,IDR,SLICE等信息
-    * 支持显示视频图片
-    * 文件大小
-    * 帧数
-    * 分辨率
-    * yuv格式
-    * fps
-    
-  * h265: 显示SPS,PPS等信息
-  
-  * yuv: yuv视频格式
-    * 显示分辨率
-    * 目前仅支持420p
-    * 支持显示图片
-    * 支持显示y,u,v分量图片
-    
   * pcap pcapng: tcpdump抓包文件
     * 支持解析rtp
     * 支持以单向链接为单位，分隔文件，并保存至/tmp/目录，如所有192.168.0.1:666 -> 10.0.0.1:80的数据流保存为一个文件
