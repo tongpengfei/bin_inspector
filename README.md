@@ -30,7 +30,7 @@
 | ogg | <font color='#33FF33'>✓</font> |   |   | [mac_ogg.png](doc/screenshots/mac_ogg.png) |
 | opus | <font color='#33FF33'>✓</font> |   |   | [mac_opus.png](doc/screenshots/mac_opus.png) |
 | flv | <font color='#33FF33'>✓</font> |   |   | [mac_flv.png](doc/screenshots/mac_flv.png) |
-| mp4 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | show timeline; show audio/video frames  | [mac_mp4.png](doc/screenshots/mac_mp4.png) |
+| mp4,m4a | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | show timeline; show audio/video frames  | [mac_mp4.png](doc/screenshots/mac_mp4.png) |
 | yuv | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> | draw y/u/v/yuv picture  | [win_yuv.png](doc/screenshots/win_yuv.png) |
 | h264 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   | [mac_h264.png](doc/screenshots/mac_h264.png) |
 | h265 | <font color='#33FF33'>✓</font> |   |   | [mac_h265.png](doc/screenshots/mac_h265.png) |
