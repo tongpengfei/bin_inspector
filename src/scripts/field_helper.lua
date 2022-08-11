@@ -30,6 +30,14 @@ local function str_desc(self)
     return string.format("%s: %s", self.name, self.value)
 end
 
+local function str_brief(self)
+    return string.format("%s: %s ", self.name, self:get_data())
+end
+
+local function str_brief_v(self)
+    return string.format("%s ", self:get_data())
+end
+
 --name:dict_value
 local function mkbrief(name, dict)
     local f = function(self)
@@ -89,6 +97,8 @@ end
 
 local t = {
     str_desc = str_desc,
+	str_brief = str_brief,
+	str_brief_v = str_brief_v,
 
     mkdesc = mkdesc,
     mkdesc_x = mkdesc_x,

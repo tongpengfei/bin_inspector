@@ -1541,7 +1541,7 @@ end
 
 local codec = {
 	authors = { {name="fei", mail="bin_inspector@163.com"} },
-    file_ext = "mp4",
+    file_ext = "mp4 m4a",
     decode = decode_mp4,
     build_summary = build_summary, 
     clear = clear,
