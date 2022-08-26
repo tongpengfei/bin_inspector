@@ -136,21 +136,29 @@ local function field_page(index)
 
 		local f_nsegs = self:append( field.uint8("nsegs", nil, fh.mkbrief("SEGS")) )
 		local total_size = 0
-		for i=1, f_nsegs.value do
-			local f_size = self:append( field.uint8(string.format("size[%d]", i)))
-			total_size = total_size + f_size.value
-		end
+        local arr_size = {}
+
+        self:append( field.list(string.format("seg_size count:%d", f_nsegs.value), nil, function(self, ba)
+    		for i=1, f_nsegs.value do
+    			local f_size = self:append( field.uint8(string.format("size[%d]", i)))
+    			total_size = total_size + f_size.value
+                table.insert(arr_size, f_size.value)
+    		end
+        end))
 
 		if 1 == f_nsegs.value then
 			local tag = ba:peek_bytes(8)
 			if tag == "OpusHead" then
 				self:append( field_opus_head( total_size ) )
 			elseif tag == "OpusTags" then
-				--self:append( field.string("packet", total_size) )
 				self:append( field_opus_tags( total_size ) )
 			end
 		else
-			self:append( field.string("packet", total_size) )
+            self:append( field.list(string.format("packets count:%d", f_nsegs.value), nil, function(self, ba)
+                for i, pack_size in ipairs(arr_size) do
+                    self:append( field.string(string.format("packet[%d]", i-1), pack_size) )
+                end
+            end))
 		end
 
 	end)
@@ -166,6 +174,9 @@ local function decode_opus( ba, len )
     local f_opus = field.list("opus", len, function(self, ba)
 		local index = 0
 		while true do
+			local pos = ba:position()
+            bi.set_progress_value(pos)
+
 			local tag = ba:peek_bytes(4)
 			if tag ~= "OggS" then 
 				break 
@@ -195,6 +206,7 @@ local function build_summary()
     bi.append_summary("version", g_opus.version )
     bi.append_summary("channel", g_opus.channel )
     bi.append_summary("sample_rate", g_opus.sample_rate )
+    bi.append_summary("stream_count", g_opus.stream_count)
     bi.append_summary("coupled_count", g_opus.coupled_count)
 
     bi.append_summary("pre_skip", g_opus.pre_skip)

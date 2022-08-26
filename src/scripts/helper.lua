@@ -25,9 +25,29 @@ local function get_base_name(str)
     return str:match("(.+)%..+")
 end
 
+-- /a/b/c.txt => /a/b
+local function get_file_path(file)
+    local fname = get_file_name(file)
+    if nil == fname then return "." end
+    if "" == fname then return "." end
+
+    local path = file:sub(1, -(#fname +1))
+
+    if path == "/" then return path end
+    path = path:gsub("/$", "", 1)
+    return path
+end
+
 local function get_file_ext(str)
     local ext = str:match("^.+(%..+)$")
     return ext
+end
+
+local function is_file_exists(file)
+    local f = io.open(file, "rb")
+    if nil == f then return false end
+    io.close(f)
+    return true
 end
 
 local function ms2time(v, timescale)
@@ -106,6 +126,22 @@ local function save_data(fname, data)
 	fp:write( data )
 	fp:close()
 end
+
+local function get_env_paths()
+    local arr = {}
+    local env_path = os.getenv("PATH")
+    if nil == env_path then return arr end
+
+    local os = bi.get_os_name()
+    if os == "win" then
+        arr = split(env_path, ";")
+    elseif os == "mac" then
+        arr = split(env_path, ":")
+    end
+    return arr
+end
+
+
 
 local dict_codec = {}
 
@@ -438,6 +474,10 @@ local t = {
 
 	get_base_name = get_base_name,
 	get_file_ext = get_file_ext,
+    get_file_path = get_file_path,
+    is_file_exists = is_file_exists,
+    get_env_paths = get_env_paths,
+
 	split = split,
 
     size_format = size_format,

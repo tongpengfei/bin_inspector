@@ -1,3 +1,4 @@
+local helper = require("helper")
 
 --type name: 123 (dict_value)
 local function mkdesc( dict )
@@ -27,15 +28,35 @@ end
 
 
 local function str_desc(self)
-    return string.format("%s: %s", self.name, self.value)
+    return string.format("%s: %s", self.name, self:get_str())
 end
 
 local function str_brief(self)
-    return string.format("%s: %s ", self.name, self:get_data())
+    return string.format("%s: %s ", self.name, self:get_str())
 end
 
 local function str_brief_v(self)
-    return string.format("%s ", self:get_data())
+    return string.format("%s ", self:get_str())
+end
+
+--type name: 0xXXX
+local function num_desc_x(self)
+    return string.format("%s %s: 0x%X", self.type, self.name, self.value) 
+end
+
+--type name: 123 0xXXX
+local function num_desc_vx(self)
+    return string.format("%s %s: %s (0x%X)", self.type, self.name, tostring(self.value), self.value) 
+end
+
+--type name: value (date)
+local function desc_sec2date(self)
+    return string.format("%s %s: %d (%s)", self.type, self.name, self.value, helper.ms2date(self.value*1000))
+end
+
+--type name: value (date)
+local function desc_ms2date(self)
+    return string.format("%s %s: %d (%s)", self.type, self.name, self.value, helper.ms2date(self.value))
 end
 
 --name:dict_value
@@ -90,7 +111,6 @@ local function mkbrief_x( name, dict )
 end
 
 
-
 local function child_brief(self)
     return self:get_child_brief()
 end
@@ -99,6 +119,12 @@ local t = {
     str_desc = str_desc,
 	str_brief = str_brief,
 	str_brief_v = str_brief_v,
+
+    num_desc_x = num_desc_x,
+    num_desc_vx = num_desc_vx,
+
+    desc_sec2date = desc_sec2date,
+    desc_ms2date = desc_ms2date,
 
     mkdesc = mkdesc,
     mkdesc_x = mkdesc_x,

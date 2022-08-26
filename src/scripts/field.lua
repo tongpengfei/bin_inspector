@@ -335,6 +335,19 @@ function field_string_t:read(ba, read_len)
     self.len = read_len
     return self.value
 end
+
+function field_string_t:get_str()
+    local data = field_t.get_data(self)
+
+    local pos = string.find(data, '\0')
+    if nil ~= pos then
+        local nbyte = self:get_byte_len()
+        local nremove = pos - nbyte - 2
+        data = data:sub(1, nremove)
+    end
+
+    return string.format("%s", data)
+end
  
 function field_string_t:get_desc()
     return string.format("%s: %d bytes", self.name, self.len) 

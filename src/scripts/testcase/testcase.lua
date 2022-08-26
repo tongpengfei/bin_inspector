@@ -4,8 +4,9 @@ local t = {
 	"test_tree",
 	"test_h264",
 	"test_byte_stream",
---]]
 	"test_bit_stream",
+--]]
+    "test_helper",
 }
 
 for _, v in ipairs(t) do

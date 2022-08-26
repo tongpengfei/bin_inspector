@@ -157,6 +157,9 @@ local function decode_ogg( ba, len )
     local f_opus = field.list("opus", len, function(self, ba)
 		local index = 0
 		while true do
+			local pos = ba:position()
+            bi.set_progress_value(pos)
+
 			local tag = ba:peek_bytes(4)
 			if tag ~= "OggS" then 
 				break 
