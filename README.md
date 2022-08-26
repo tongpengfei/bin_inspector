@@ -1,7 +1,7 @@
 # BinInspector 文件格式查看器
 # 最新下载地址:
-  Mac: [BinInspector_v0.0.1.dmg](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.1/BinInspector_v0.0.1.dmg)  
-  Windows: [BinInspector_win64_release_v0.0.1.zip](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.1/BinInspector_win64_release_v0.0.1.zip)
+  Mac: [BinInspector_v0.0.2.dmg](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.2/BinInspector_v0.0.2.dmg)  
+  Windows: [BinInspector_win64_release_v0.0.1.zip](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.2/BinInspector_win64_release_v0.0.2.zip)
   
   
 ### 主要功能
@@ -24,6 +24,7 @@
 
 | file format | supported | draw picture | comment | screenshot |
 | :-----: | :----: | :----: | :---- | :---- |
+| exe,dll | <font color='#33FF33'>✓</font> |   |   | [mac_exe.png](doc/screenshots/mac_exe.png)  |
 | aac | <font color='#33FF33'>✓</font> |   |   | [mac_aac.png](doc/screenshots/mac_aac.png)  |
 | wav | <font color='#33FF33'>✓</font> |   | extract pcm; seperate L/R pcm  | [mac_wav.png](doc/screenshots/mac_wav.png) |
 | mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   | [mac_mp4.png](doc/screenshots/mac_mp3.png) |
