@@ -24,7 +24,7 @@
 
 | file format | supported | draw picture | comment | screenshot |
 | :-----: | :----: | :----: | :---- | :---- |
-| exe,dll | <font color='#33FF33'>✓</font> |   | check dll is exists | [mac_exe.png](doc/screenshots/mac_exe.png)  |
+| exe,dll | <font color='#33FF33'>✓</font> |   | check depends dll is exists | [mac_exe.png](doc/screenshots/mac_exe.png)  |
 | aac | <font color='#33FF33'>✓</font> |   |   | [mac_aac.png](doc/screenshots/mac_aac.png)  |
 | wav | <font color='#33FF33'>✓</font> |   | extract pcm; seperate L/R pcm  | [mac_wav.png](doc/screenshots/mac_wav.png) |
 | mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   | [mac_mp4.png](doc/screenshots/mac_mp3.png) |
