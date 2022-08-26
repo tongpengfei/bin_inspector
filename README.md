@@ -49,6 +49,8 @@
     * 支持端口解析配置，不同的端口解析为不同的格式
 
 ### 截图
+![mac exe](doc/screenshots/mac_exe.png)
+![mac exe dll](doc/screenshots/mac_exe_depend_dll.png)
 ![mac h264](doc/screenshots/mac_h264.png)
 ![mac mp4](doc/screenshots/mac_mp4.png)
 ![win yuv](doc/screenshots/win_yuv.png)
