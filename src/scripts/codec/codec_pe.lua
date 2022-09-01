@@ -1752,7 +1752,7 @@ end
 
 local codec = {
 	authors = { {name="fei", mail="bin_inspector@163.com"} },
-    file_desc = "pe files",
+    file_desc = "PE files",
     file_ext = "exe dll",
     decode = decode_pe,
     clear = clear,

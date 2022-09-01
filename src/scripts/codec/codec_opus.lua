@@ -43,6 +43,7 @@ function opus_t:ctor()
 	self.vendor = nil
 	self.comments = {}
 	self.duration = 0
+    self.packet_count = 0
 	self.page_count = 0
 end
 
@@ -140,10 +141,11 @@ local function field_page(index)
 
         self:append( field.list(string.format("seg_size count:%d", f_nsegs.value), nil, function(self, ba)
     		for i=1, f_nsegs.value do
-    			local f_size = self:append( field.uint8(string.format("size[%d]", i)))
+    			local f_size = self:append( field.uint8(string.format("size[%d]", i-1)))
     			total_size = total_size + f_size.value
                 table.insert(arr_size, f_size.value)
     		end
+
         end))
 
 		if 1 == f_nsegs.value then
@@ -154,9 +156,13 @@ local function field_page(index)
 				self:append( field_opus_tags( total_size ) )
 			end
 		else
+
             self:append( field.list(string.format("packets count:%d", f_nsegs.value), nil, function(self, ba)
                 for i, pack_size in ipairs(arr_size) do
-                    self:append( field.string(string.format("packet[%d]", i-1), pack_size) )
+                    if pack_size > 0 then
+                        self:append( field.string(string.format("packet[%d]", i-1), pack_size) )
+                        g_opus.packet_count = g_opus.packet_count + 1
+                    end
                 end
             end))
 		end
@@ -212,6 +218,7 @@ local function build_summary()
     bi.append_summary("pre_skip", g_opus.pre_skip)
     bi.append_summary("sample_count", g_opus.sample_count)
     bi.append_summary("bitrate", string.format("%.3f kbps", g_opus.bitrate/1000))
+    bi.append_summary("packet_count", g_opus.packet_count)
     bi.append_summary("page_count", g_opus.page_count)
 
 	local ms = g_opus.duration 
