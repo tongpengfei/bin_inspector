@@ -51,6 +51,9 @@ local function is_file_exists(file)
 end
 
 local function ms2time(v, timescale)
+	if nil == v or 0 == v then
+		return string.format("00:00:00.000")
+	end
     timescale = timescale or 1000
     local msv = math.floor(v / timescale * 1000)
     local ms = msv % 1000
@@ -62,6 +65,10 @@ local function ms2time(v, timescale)
 end
 
 local function ms2date(v)
+	if nil == v or 0 == v then
+		return string.format("0000-00-00 00:00:00")
+	end
+
     local ms = v % 1000
     local sday = os.date("%Y-%m-%d %H:%M:%S", math.floor(v/1000))
     return string.format("%s.%03d", sday, ms)

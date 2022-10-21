@@ -29,6 +29,18 @@ struct OpusHead{
 };
 --]]
 
+local TOC_S_STR = {
+    [0] = "mono",
+    [1] = "stereo",
+}
+
+local TOC_C_STR = {
+    [0] = "1frame",
+    [1] = "2frame,same size",
+    [2] = "2frame,differenct size",
+    [3] = "nframe",
+}
+
 local opus_t = class("opus_t")
 function opus_t:ctor()
 	self.fsize = 0
@@ -48,6 +60,42 @@ function opus_t:ctor()
 end
 
 local g_opus = nil
+
+local function packet_get_nb_frames(toc, data0, len)
+	if len<1 then return -1 end
+	local count = toc & 0x3;
+	if count == 0 then
+		return 1;
+	elseif count ~= 3 then
+		return 2;
+	elseif len<2 then
+		return -4;
+	else
+		return data0 & 0x3F;
+	end
+end
+
+local function packet_get_samples_per_frame(toc, sample_rate)
+	local audiosize = 0;
+	if toc & 0x80 then
+		audiosize = ((toc>>3) & 0x3)
+		audiosize = (sample_rate<<audiosize)/400
+	elseif (toc&0x60) == 0x60 then
+		if toc & 0x08 then
+            audiosize = sample_rate / 50
+		else
+            audiosize = sample_rate / 100
+		end
+	else
+		audiosize = ((toc>>3)&0x3)
+		if audiosize == 3 then
+			audiosize = sample_rate*60/1000
+		else
+			audiosize = (sample_rate<<audiosize)/100
+		end
+	end
+	return audiosize;
+end
 
 local function field_opus_head(len)
 	local f = field.list("opus_head", len, function(self, ba)
@@ -133,19 +181,31 @@ local function field_page(index)
 		self:append( field.uint32("seq", false, nil, fh.mkbrief("SEQ")) )
 		self:append( field.uint32("crc") )
 
-		g_opus.sample_count = f_gp.value - g_opus.pre_skip
+		--g_opus.sample_count = f_gp.value - g_opus.pre_skip
 
 		local f_nsegs = self:append( field.uint8("nsegs", nil, fh.mkbrief("SEGS")) )
 		local total_size = 0
         local arr_size = {}
 
         self:append( field.list(string.format("seg_size count:%d", f_nsegs.value), nil, function(self, ba)
+            local last_size = 0
     		for i=1, f_nsegs.value do
     			local f_size = self:append( field.uint8(string.format("size[%d]", i-1)))
     			total_size = total_size + f_size.value
-                table.insert(arr_size, f_size.value)
-    		end
 
+                if i == 1 then
+                    table.insert(arr_size, f_size.value)
+                else
+                    if last_size == 255 then
+                        local narr = #arr_size
+                        arr_size[narr] = arr_size[narr] + f_size.value
+                    else
+                        table.insert(arr_size, f_size.value)
+                    end
+                end
+
+                last_size = f_size.value
+    		end
         end))
 
 		if 1 == f_nsegs.value then
@@ -157,11 +217,41 @@ local function field_page(index)
 			end
 		else
 
-            self:append( field.list(string.format("packets count:%d", f_nsegs.value), nil, function(self, ba)
+            self:append( field.list(string.format("packets count:%d", #arr_size), nil, function(self, ba)
                 for i, pack_size in ipairs(arr_size) do
                     if pack_size > 0 then
-                        self:append( field.string(string.format("packet[%d]", i-1), pack_size) )
-                        g_opus.packet_count = g_opus.packet_count + 1
+                        self:append( field.list(string.format("packet[%d]", i-1), pack_size, function(self, ba)
+                            local toc = ba:peek_uint8()
+                            self:append( field.bit_list("TOC", 1, function(self, bs)
+                                self:append( field.ubits("config", 5, fh.num_desc_vx, fh.mkbrief_x("CONFIG")) )
+                                self:append( field.ubits("s", 1, fh.mkdesc(TOC_S_STR), fh.mkbrief("S", TOC_S_STR)) )
+                                self:append( field.ubits("code", 2, fh.mkdesc(TOC_C_STR), fh.mkbrief("C", TOC_C_STR) ))
+                            end, nil, fh.child_brief))
+
+                            local data0 = 0
+                            if pack_size > 1 then
+                                data0 = ba:peek_uint8(1)
+                                self:append( field.string("data", pack_size-1) )
+                            end
+
+                            local spp = packet_get_nb_frames(toc, data0, pack_size)
+                            if spp<1 or spp>48 then
+                                return
+                            end
+
+                            local nsample = packet_get_samples_per_frame(toc, g_opus.sample_rate)
+                            spp = spp * nsample
+                            if (spp<120 or spp>5760 or (spp%120)~=0) then
+                                return
+                            end
+
+		                    g_opus.sample_count = g_opus.sample_count + spp
+                            g_opus.packet_count = g_opus.packet_count + 1
+                            self.sample_count = spp
+                        end, function(self)
+                            return string.format("%s %snsample:%d len:%d"
+                                    , self.name, self:get_child_brief(), self.sample_count or 0, self.len)
+                        end))
                     end
                 end
             end))
