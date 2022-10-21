@@ -1,11 +1,12 @@
 # BinInspector 文件格式查看器
 # 最新下载地址:
   Mac: [BinInspector_v0.0.2.dmg](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.2/BinInspector_v0.0.2.dmg)  
-  Windows: [BinInspector_win64_release_v0.0.1.zip](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.2/BinInspector_win64_release_v0.0.2.zip)
+  Windows: [BinInspector_win64_release_v0.0.2.zip](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.2/BinInspector_win64_release_v0.0.2.zip)
   
   
 ### 主要功能
   * 查看文件格式
+  * 检查exe依赖的dll文件是否存在，是否可用
   * 把一个大的pcap文件按链接切隔为各个小的pcap文件
   * 查找二进制，字符串，数字
   * 时间戳转为日期，日期转为时间戳 ms2date date2ms
@@ -49,6 +50,8 @@
     * 支持端口解析配置，不同的端口解析为不同的格式
 
 ### 截图
+![mac exe](doc/screenshots/mac_exe.png)
+![mac exe dll](doc/screenshots/mac_exe_depend_dll.png)
 ![mac h264](doc/screenshots/mac_h264.png)
 ![mac mp4](doc/screenshots/mac_mp4.png)
 ![win yuv](doc/screenshots/win_yuv.png)
