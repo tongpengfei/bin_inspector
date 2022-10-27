@@ -49,6 +49,20 @@
     * 支持从rtp里提取h264，并保存至/tmp文件
     * 支持端口解析配置，不同的端口解析为不同的格式
 
+### 更新日志
+> ## v0.0.4
+> * 支持中文路径
+>
+> ## v0.0.3
+> * 支持自动更新lua脚本
+>
+> ## v0.0.2
+> * 支持解析格式 opus
+> * 支持解析格式 ogg
+>
+> ## v0.0.1
+> * hello world
+
 ### 截图
 ![mac exe](doc/screenshots/mac_exe.png)
 ![mac exe dll](doc/screenshots/mac_exe_depend_dll.png)
