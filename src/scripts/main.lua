@@ -6,3 +6,4 @@ print(package.path)
 helper.init()
 
 --require("testcase")
+
