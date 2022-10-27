@@ -1,7 +1,7 @@
 # BinInspector 文件格式查看器
 # 最新下载地址:
-  Mac: [BinInspector_v0.0.3.dmg](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.3/BinInspector_v0.0.3.dmg)  
-  Windows: [BinInspector_win64_release_v0.0.3.zip](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.3/BinInspector_win64_release_v0.0.3.zip)
+  Mac: [BinInspector_v0.0.4.dmg](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.4/BinInspector_v0.0.4.dmg)  
+  Windows: [BinInspector_win64_release_v0.0.4.zip](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.4/BinInspector_win64_release_v0.0.4.zip)
   
   
 ### 主要功能
