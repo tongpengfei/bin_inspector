@@ -3,7 +3,7 @@
 在工作中需要查看h264视频数据格式，但是mac下找不到一款好用的，免费的工具，很是不方便。  
 于是便有了BinInspector，以下简称BI吧。  
 
-![h264截图](doc/screenshots/mac_h264.png)  
+[h264截图](../screenshots/mac_h264.png)  
 
 
 虽然起初是为了查看h264数据，但考虑到除了h264,还mp4,mp3,flv,aac等一系列数据可能需要  
@@ -13,16 +13,16 @@
 包太大，想提取出某一路流的抓包数据，或者从抓包文件里提取h264数据等等，于是支持了pcap,   
 pcapng格式，可以定制自己的需求。  
 
-![分析抓包文件截图](doc/screenshots/mac_pcap.png)
-![从抓包文件里提取h264数据](doc/screenshots/mac_pcap_rtp_extract_h264.png)
+[分析抓包文件截图](../screenshots/mac_pcap.png)
+[从抓包文件里提取h264数据](../screenshots/mac_pcap_rtp_extract_h264.png)
 
 这样就可以用BI从抓包文件里提取h264数据，再用BI分析h264数据，只用一个工具就可以了。  
 
 后来在打包windows版本时候，又经常遇到找不到dll的问题，于是把PE格式也支持了，方便查看
 dll依赖关系。  
 
-![PE截图](doc/screenshots/mac_exe.png)
-![DLL依赖截图](doc/screenshots/mac_exe_depend_dll.png)  
+[PE截图](../screenshots/mac_exe.png)
+[DLL依赖截图](../screenshots/mac_exe_depend_dll.png)  
 
 > * Qt负责 ui，跨平台  
 > * c++导出lua接口  
@@ -46,7 +46,7 @@ win: $BI安装路径/.bin_inspector/scripts/codec/
 目录下，BI会优先加载私有解析器，再加载公共解析器，如果某个文件后缀已经被加载，则  
 不会重复加载，所以会优先使用私有解析器。  
 
-公共脚本后面会支持自动更新。  
+公共脚本支持自动更新。  
 
 目前BI支持的数据格式有十几种，还在持续增加中， 
 

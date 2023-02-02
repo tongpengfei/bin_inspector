@@ -3,7 +3,6 @@
   Mac: [BinInspector_v0.0.4.dmg](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.4/BinInspector_v0.0.4.dmg)  
   Windows: [BinInspector_win64_release_v0.0.4.zip](https://github.com/tongpengfei/bin_inspector/releases/download/v0.0.4/BinInspector_win64_release_v0.0.4.zip)
   
-  
 ### 主要功能
   * 查看文件格式
   * 检查exe依赖的dll文件是否存在，是否可用
@@ -16,10 +15,6 @@
   * 格式解析插件化，每一个格式就是一个lua脚本，根据文件名后缀解析格式
   * 支持二次开发，可以自由扩展格式
 
-### 支持二次开发
-  * scripts/codec里是目前支持的所有解析器，可以参考codec_default.lua开发自己的解析器
-  * BinInspector会自动加载scripts/codec下的所有解析器，这里仅应放置公共解析器，也就是开源的解析器
-  * Mac下的私有解析器可以放在~/.bin_inspector/scripts/codec下面，比如仅自己使用的解析器可以放在这里
 
 ### 目前支持的文件格式
 
@@ -49,6 +44,13 @@
     * 支持从rtp里提取h264，并保存至/tmp文件
     * 支持端口解析配置，不同的端口解析为不同的格式
 
+### 截图
+![mac exe](doc/screenshots/mac_exe.png)
+![mac exe dll](doc/screenshots/mac_exe_depend_dll.png)
+![mac h264](doc/screenshots/mac_h264.png)
+![mac mp4](doc/screenshots/mac_mp4.png)
+![win yuv](doc/screenshots/win_yuv.png)
+
 ### 更新日志
 > ## v0.0.4
 > * 支持中文路径
@@ -62,10 +64,3 @@
 >
 > ## v0.0.1
 > * hello world
-
-### 截图
-![mac exe](doc/screenshots/mac_exe.png)
-![mac exe dll](doc/screenshots/mac_exe_depend_dll.png)
-![mac h264](doc/screenshots/mac_h264.png)
-![mac mp4](doc/screenshots/mac_mp4.png)
-![win yuv](doc/screenshots/win_yuv.png)
