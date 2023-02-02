@@ -238,6 +238,55 @@ function rtcp_xr_t:ctor()
     self.ssrc = 0
 end
 
+local stream_audio_payload_t = class("stream_audio_payload")
+function stream_audio_payload_t:ctor()
+	self.dict_payload = {}
+end
+
+function stream_audio_payload_t:set(seq, field_payload)
+	self.dict_payload[seq] = field_payload
+end
+
+function stream_audio_payload_t:save(file)
+    local fp = io.open(file, "wb")
+    if nil == fp then 
+        bi.message_box(string.format("cant save file to:%s", file))
+        return 
+    end
+
+	local seqs = {}
+
+    for k, _ in pairs(self.dict_payload) do
+        table.insert( seqs, k )
+    end
+    table.sort(seqs, function(a, b) return a < b end)
+
+	local start_ts = 1025418
+	local step = 39
+
+	local ts_cur = start_ts
+    for i, seq in ipairs(seqs) do
+        local f_payload = self.dict_payload[seq]
+		
+        local data = f_payload:get_data()
+		local len = string.pack("I4", f_payload:get_byte_len() )
+		ts_cur = ts_cur + step
+		local ts = string.pack("I4", ts_cur)
+		local frame = len .. ts .. data
+
+		fp:write(frame)
+	end
+
+    fp:close()
+end
+
+function stream_audio_payload_t:clear()
+	self.dict_payload = {}
+end
+
+local dict_audio_stream = {}
+
+
 
 local function field_rtp_hdr(rtp_hdr)
     rtp_hdr = rtp_hdr or rtp_hdr_t.new()
@@ -393,6 +442,8 @@ local function field_nalu_stap(rtp_hdr, key, len, is_stap_b)
             self:append( field.uint16("DON", true) )
         end
 
+		local arr_stap = {}
+
         local index = 0
         local remain = len
         while remain > 0 do
@@ -414,14 +465,18 @@ local function field_nalu_stap(rtp_hdr, key, len, is_stap_b)
                 --local f_ebsp = self:append( field.string( "ebsp", f_size.value-1) )
                 local f_ebsp = self:append( field.string( "ebsp", nalu_len-1) )
 
-				--TODO BUG: STAP-A共用了一个seq,造成多从此nalu只能有第一个seq起作用,所以STAP-A时候，SPS,PPS提取不到PPS
+				table.insert( arr_stap, {
+					field_ebsp = f_ebsp,
+					i_nalu_header = i_nalu_hdr,
+				})
 
-                local nalu_buf = dict_stream_nalus:get(key)
-                nalu_buf:append( rtp_hdr.seq, f_ebsp, i_nalu_hdr, true)
             end, nil, fh.child_brief))
             index = index + 1
             remain = len - (ba:position() - pos)
         end
+
+		local nalu_buf = dict_stream_nalus:get(key)
+		nalu_buf:append_stap( rtp_hdr.seq, arr_stap )
 
     end, nil, cb_brief)
     return f
@@ -570,6 +625,53 @@ local function field_rtp_video(len)
         if remain <= 0 then return end
 
         self:append( field_rtp_h264(rtp_hdr, remain) )
+    end, nil, fh.child_brief)
+    return f
+end
+
+local function field_payload_audio(rtp_hdr, len)
+    local f = field.list("payload_audio", len, function(self, ba)
+        local pos = ba:position()
+
+        local f_data = self:append( field.string("data", len) )
+
+		local stream = dict_audio_stream[rtp_hdr.ssrc]
+		if nil == stream then
+			stream = stream_audio_payload_t.new()
+			dict_audio_stream[rtp_hdr.ssrc] = stream
+		end
+		stream:set( rtp_hdr.seq, f_data )
+
+    end, nil, fh.child_brief)
+
+	f.cb_context_menu = function(self, menu)
+		menu:add_action("Extract audio payload to len:data", function()
+
+			for ssrc, stream in pairs(dict_audio_stream) do
+				stream:save( string.format("/%s/audio_payload_%08X.nttt", bi.get_tmp_dir(), ssrc) )
+			end
+
+		end)
+	end
+
+    return f
+end
+
+local function field_rtp_audio(len)
+    local f = field.list("payload_audio", len, function(self, ba)
+
+        local pos = ba:position()
+        local rtp_hdr = rtp_hdr_t.new()
+        self:append( field_rtp_hdr(rtp_hdr) )
+
+        if 1 == rtp_hdr.extension then
+            self:append( field_rtp_extension() )
+        end
+
+        local remain = len - (ba:position() - pos)
+        if remain <= 0 then return end
+
+        self:append( field_payload_audio(rtp_hdr, remain) )
     end, nil, fh.child_brief)
     return f
 end
@@ -1031,6 +1133,9 @@ local dict_pt = {
     [96] = field_rtp_video,
     [107] = field_rtp_video,
 
+    [111] = field_rtp_audio,
+    [127] = field_rtp_video,
+
     [192] = field_rtcp_fir,
     [193] = field_rtcp_nack,
 
@@ -1106,6 +1211,7 @@ local codec = {
     field_rtp_hdr = field_rtp_hdr,
     field_rtp_extension = field_rtp_extension,
     field_rtp_h264 = field_rtp_h264,
+	field_rtp_audio = field_rtp_audio,
 }
 
 return codec

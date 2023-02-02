@@ -19,9 +19,51 @@ function nalu_buf_t:append( seq, field_ebsp, i_nalu_header, is_new_nal )
     self.field_ebsps[seq] = t
 end
 
+function nalu_buf_t:append_stap(seq, stapa)
+	local old = self.field_ebsps[seq]
+	if nil ~= old then
+		return
+	end
+
+	local arr = {
+		is_stab = true,
+		arr_data = {}
+	}
+
+	for _, stap in ipairs(stapa) do
+
+		local t = {
+			field_ebsp = stap.field_ebsp,
+			i_nalu_header = stap.i_nalu_header,
+			is_new_nal = true,
+		}
+	
+		table.insert(arr.arr_data, t) 
+	end
+	self.field_ebsps[seq] = arr
+end
+
 
 function nalu_buf_t:clear()
     self.field_ebsps = {}
+end
+
+local proc_save_nalu = function(fp, data)
+    local ebsp = data.field_ebsp:get_data()
+    local nalu = nil
+    if true == data.is_new_nal then
+        local sig = nil
+        if i == 1 then
+            sig = string.pack("I4", 0x1000000)
+        else
+            sig = string.pack("I3", 0x10000)
+        end
+        nalu = sig .. string.pack("I1", data.i_nalu_header) .. ebsp
+    else
+        nalu = ebsp
+    end
+
+    fp:write(nalu)
 end
 
 function nalu_buf_t:save(file)
@@ -41,21 +83,13 @@ function nalu_buf_t:save(file)
     for i, seq in ipairs(seqs) do
         local t = self.field_ebsps[seq]
 
-        local ebsp = t.field_ebsp:get_data()
-        local nalu = nil
-        if true == t.is_new_nal then
-            local sig = nil
-            if i == 1 then
-                sig = string.pack("I4", 0x1000000)
-            else
-                sig = string.pack("I3", 0x10000)
-            end
-            nalu = sig .. string.pack("I1", t.i_nalu_header) .. ebsp
-        else
-            nalu = ebsp
-        end
-
-        fp:write(nalu)
+		if t.is_stab then
+			for _, data in ipairs(t.arr_data) do
+				proc_save_nalu(fp, data)
+			end
+		else
+			proc_save_nalu(fp, t)
+		end
     end
 
     fp:close()
