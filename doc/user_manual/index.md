@@ -6,3 +6,5 @@
 [前言](./introduce.md)  
 [PE解析器](./codec_pe.md)  
 [H264解析器](./codec_h264.md)  
+[MP3解析器](./codec_mp3.md)  
+[MP4解析器](./codec_mp4.md)  
