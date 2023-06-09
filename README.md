@@ -23,7 +23,7 @@
 | exe,dll | <font color='#33FF33'>✓</font> |   | check depends dll is exists | [mac_exe.png](doc/screenshots/mac_exe.png)  |
 | aac | <font color='#33FF33'>✓</font> |   |   | [mac_aac.png](doc/screenshots/mac_aac.png)  |
 | wav | <font color='#33FF33'>✓</font> |   | extract pcm; seperate L/R pcm  | [mac_wav.png](doc/screenshots/mac_wav.png) |
-| mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   | [mac_mp4.png](doc/screenshots/mac_mp3.png) |
+| mp3 | <font color='#33FF33'>✓</font> | <font color='#33FF33'>✓</font> |   | [mac_mp3.png](doc/screenshots/mac_mp3.png) |
 | ogg | <font color='#33FF33'>✓</font> |   |   | [mac_ogg.png](doc/screenshots/mac_ogg.png) |
 | opus | <font color='#33FF33'>✓</font> |   |   | [mac_opus.png](doc/screenshots/mac_opus.png) |
 | flv | <font color='#33FF33'>✓</font> |   |   | [mac_flv.png](doc/screenshots/mac_flv.png) |
