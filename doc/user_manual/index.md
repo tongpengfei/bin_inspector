@@ -3,4 +3,5 @@
 * <center>Author: fei</center>  
 * <center>Mail: bin_inspector@163.com</center>  
 
-[前言](doc/user_manual/introduce.md)  
+[前言](./introduce.md)  
+[PE解析器](./decode_pe.md)
