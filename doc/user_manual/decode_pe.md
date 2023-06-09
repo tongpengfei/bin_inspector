@@ -3,8 +3,7 @@
 PE文件也就是我们常用的exe, dll文件。\
 当我们运行一个exe程序时，通常会依赖一些dll库，使用BinInspector可以很方便的查看缺少哪个dll。
 
-[PE截图](../screenshots/mac_exe.png)
-
+![PE截图](../screenshots/mac_exe.png)
 
 我们经常在遇到运行exe时，提示缺少某个dll
 
@@ -16,5 +15,5 @@ PE文件也就是我们常用的exe, dll文件。\
 
 BI也可会把整个PE的文件结构清晰的显示出来，方便学习。
 
-下图红色就表示没找到相应的dll
-[DLL依赖截图](../screenshots/mac_exe_depend_dll.png)  
+下图红色就表示没找到相应的dll  
+![DLL依赖截图](../screenshots/mac_exe_depend_dll.png)  
